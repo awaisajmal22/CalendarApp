@@ -55,7 +55,7 @@ class HomePageScreenState extends State<HomePageScreen> {
               children: [
                 _buildCalendar(context),
                 const SizedBox(height: 20),
-                const SizedBox(
+                 SizedBox(
                   height: 458,
                   width: double.maxFinite,
                   child: Stack(
