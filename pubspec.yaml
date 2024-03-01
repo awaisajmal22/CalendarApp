@@ -38,6 +38,9 @@ dependencies:
   syncfusion_flutter_calendar: ^20.4.38
   provider: ^6.1.1
   google_mobile_ads: ^4.0.0
+  calendar_date_picker2: ^0.5.3
+  intl: ^0.19.0
+  toggle_switch: ^2.1.0
   
 
 dev_dependencies:
