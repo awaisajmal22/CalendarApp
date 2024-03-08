@@ -1,4 +1,5 @@
-import 'package:calenderapp/App/Screens/home/calender_screen.dart';
+
+import 'package:calenderapp/App/Screens/home/home_page_screen/home_page_screen.dart';
 import 'package:calenderapp/App/utils/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -35,12 +36,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           appOpenAdManager.showAdIfAvailable(context);
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            MaterialPageRoute(builder: (context) => const HomePageScreen()),
           );
         } else {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            MaterialPageRoute(builder: (context) => const HomePageScreen()),
           );
         }
       });
