@@ -5,20 +5,20 @@ import 'package:sqflite/sqlite_api.dart';
 class DBHelper {
   static Database? _db;
   static const int _version = 1;
-  static const String _tableName = 'my_database';
+  static const String _tableName = 'calenderDataBase';
 
   static Future<void> initDb() async {
     if (_db != null) {
       return;
     }
     try {
-      String _path = await getDatabasesPath() + 'my_database.db';
+      String _path = await getDatabasesPath() + 'calenderDataBase.db';
       _db = await openDatabase(_path, version: _version, onCreate: (db, v) {
         print("Create new one");
         return db.execute(
           "CREATE TABLE $_tableName("
           "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-          "eventName STRING, description TEXT, date INTEGER, color STRING, "
+          "eventName STRING, description TEXT, date INTEGER, color INT, "
           "startTime INTEGER, endTime INTEGER, "
           "repeat INTEGER, "
           "category STRING, "

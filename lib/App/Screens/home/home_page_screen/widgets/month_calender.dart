@@ -26,12 +26,12 @@ class MonthCalender extends StatelessWidget {
 
             initialDisplayDate: DateTime.now(),
             onSelectionChanged: (date) {
-              print("Hi");
+              // print("Hi");
               provider.getSelectedDate(date: date.date!);
-              print('Selected date: ${date.date}');
+              // print('Selected date: ${date.date}');
             },
             onTap: (CalendarTapDetails details) {
-              print("ho hpw");
+              // print("ho hpw");
               if (details.targetElement == CalendarElement.calendarCell) {
                 provider.getSelectedDate(date: details.date!);
               }
@@ -87,6 +87,6 @@ class MeetingDataSource extends CalendarDataSource {
 
   @override
   Color getColor(int index) {
-    return Color(int.parse("0xff${appointments![index].color}"));
+    return Color(appointments![index].color);
   }
 }

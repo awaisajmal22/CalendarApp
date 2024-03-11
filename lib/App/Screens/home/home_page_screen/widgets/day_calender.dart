@@ -3,9 +3,14 @@ import 'package:calenderapp/App/Screens/models/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:calenderapp/App/Screens/home/home_page_screen/provider/home_page_provider.dart';
+import 'package:calenderapp/App/Screens/models/event_model.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-class DayCalendar extends StatelessWidget {
-  DayCalendar({super.key});
+class DayCalender extends StatelessWidget {
+  DayCalender({super.key});
   // final CalendarController _controller = CalendarController();
   @override
   Widget build(BuildContext context) {
@@ -26,12 +31,12 @@ class DayCalendar extends StatelessWidget {
 
             initialDisplayDate: DateTime.now(),
             onSelectionChanged: (date) {
-              print("Hi");
+              // print("Hi");
               provider.getSelectedDate(date: date.date!);
-              print('Selected date: ${date.date}');
+              // print('Selected date: ${date.date}');
             },
             onTap: (CalendarTapDetails details) {
-              print("ho hpw");
+              // print("ho hpw");
               if (details.targetElement == CalendarElement.calendarCell) {
                 provider.getSelectedDate(date: details.date!);
               }
@@ -87,6 +92,6 @@ class MeetingDataSource extends CalendarDataSource {
 
   @override
   Color getColor(int index) {
-    return Color(int.parse("0xff${appointments![index].color}"));
+    return Color(appointments![index].color);
   }
 }

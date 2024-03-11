@@ -9,7 +9,7 @@ class EventModel {
   int? endTime;
   int? repeat;
   String? category;
-  dynamic? color;
+  int? color;
   EventModel(
       {this.id,
       this.color,

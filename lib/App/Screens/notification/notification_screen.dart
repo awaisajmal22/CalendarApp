@@ -62,8 +62,7 @@ class NotificationScreen extends StatelessWidget {
                               horizontal: 10, vertical: 20),
                           width: double.infinity,
                           decoration: BoxDecoration(
-                              color: Color(int.parse(
-                                  '0xff${provider.events[index].color}')),
+                              color: Color(provider.events[index].color!),
                               boxShadow: [
                                 BoxShadow(
                                   color: const Color(0xff000000)

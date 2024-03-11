@@ -34,17 +34,16 @@ class _HomePageScreenState extends State<HomePageScreen> {
     Provider.of<HomePageProvider>(context, listen: false).getEvents();
   }
 
-  Color randomColor = generateRandomColor();
+  int randomColor = 1;
 
-  void changeColor() {
-    setState(() {
-      randomColor = generateRandomColor();
-    });
-  }
-
-  static Color generateRandomColor() {
+  generateRandomColor() {
     Random random = Random();
-    return Color(random.nextInt(0xFFFFFF) | 0xFF000000);
+    int hex = 0xFF000000 + random.nextInt(0xFFFFFF);
+    print(hex);
+    setState(() {
+      randomColor = hex;
+    });
+    // print(randomColor);
   }
 
   @override
@@ -68,6 +67,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   top: 0,
                   child: GestureDetector(
                     onTap: () {
+                      generateRandomColor();
                       _showEventBottomSheet(
                         context,
                         provider.selectedDate,
@@ -110,7 +110,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       color: Colors.white,
                       height: size.height * 100,
                       width: size.width * 100,
-                      child: DayCalendar(),
+                      child: DayCalender(),
                     );
                   }
                   if (provider.tileIndex == 1) {
@@ -557,8 +557,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         );
                         if (pickedDate != null &&
                             pickedDate != provider.selectedDate) {
-                          provider.getSelectedDate(
-                              date: pickedDate);
+                          provider.getSelectedDate(date: pickedDate);
                         }
                       },
                       child: Container(
@@ -573,8 +572,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
                           // onPressed: () => _selectDate(context, provider),
                         ),
-                        child: Text(DateFormat.yMd()
-                            .format(provider.selectedDate)),
+                        child: Text(
+                            DateFormat.yMd().format(provider.selectedDate)),
                       ),
                     ),
                     SizedBox(height: 16),
@@ -588,6 +587,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 context: context,
                                 initialTime: TimeOfDay.now(),
                               );
+                              print(provider.selectedDate.year);
+                              print(pickedTime);
                               if (pickedTime != null) {
                                 provider.getStartTime(
                                     time: DateTime(
@@ -596,6 +597,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                             provider.selectedDate.day,
                                             pickedTime.hour,
                                             pickedTime.minute)
+                                        .toIso8601String());
+                              } else {
+                                provider.getStartTime(
+                                    time: DateTime(
+                                            provider.selectedDate.year,
+                                            provider.selectedDate.month,
+                                            provider.selectedDate.day,
+                                            provider.selectedDate.hour,
+                                            provider.selectedDate.minute)
                                         .toIso8601String());
                               }
                             },
@@ -637,6 +647,16 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                             provider.selectedDate.day,
                                             pickedTime.hour,
                                             pickedTime.minute)
+                                        .toIso8601String());
+                              } else {
+                                provider.getendTime(
+                                    time: DateTime(
+                                            provider.selectedDate.year,
+                                            provider.selectedDate.month,
+                                            provider.selectedDate.day,
+                                            provider.selectedDate.hour,
+                                            provider.selectedDate.minute)
+                                        .add(const Duration(minutes: 1))
                                         .toIso8601String());
                               }
                             },
@@ -714,19 +734,34 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        changeColor();
-                        print(provider.descriptionController.text);
+                        generateRandomColor();
+                        provider.getendTime(
+                            time: DateTime(
+                                    provider.selectedDate.year,
+                                    provider.selectedDate.month,
+                                    provider.selectedDate.day,
+                                    DateTime.parse(provider.endTime).hour,
+                                    DateTime.parse(provider.endTime).minute)
+                                .toIso8601String());
+                        print(provider.selectedDate.hour);
+                        provider.getStartTime(
+                            time: DateTime(
+                                    provider.selectedDate.year,
+                                    provider.selectedDate.month,
+                                    provider.selectedDate.day,
+                                    DateTime.parse(provider.startTime).hour,
+                                    DateTime.parse(provider.startTime).minute)
+                                .toIso8601String());
+                        // print(provider.descriptionController.text);
                         provider
                             .addEvent(
                                 event: EventModel(
-                                    color: randomColor.value
-                                        .toRadixString(16)
-                                        .substring(2),
+                                    color: randomColor,
                                     eventName: provider.nameController.text,
                                     eventDescription:
                                         provider.descriptionController.text,
-                                    date: provider.selectedDate
-                                        .microsecondsSinceEpoch,
+                                    date: provider
+                                        .selectedDate.microsecondsSinceEpoch,
                                     endTime: DateTime.parse(provider.endTime)
                                         .microsecondsSinceEpoch,
                                     startTime:
@@ -736,6 +771,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                     category: provider.categoryName))
                             .whenComplete(() {
                           provider.getEvents();
+
                           Navigator.of(context).pop();
                         });
                       },
